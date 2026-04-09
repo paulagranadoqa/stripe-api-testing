@@ -1,0 +1,278 @@
+1️⃣ STRP-01: Create Customer (Criação de Cliente)
+Este é o nosso Happy Path (Caminho Feliz). Ele prova que a comunicação com a API está funcionando.
+
+O que fazemos: Enviamos um POST com nome e e-mail.
+
+O "Pulo do Gato": Usamos form: true porque a Stripe espera os dados como se viessem de um formulário.
+
+Passo a passo:
+
+Enviamos os dados do "John Doe".
+
+Validamos se o status é 200 (Sucesso).
+
+Ação Crucial: Salvamos o id que a Stripe nos devolveu na variável customerId. Sem esse ID, não conseguiríamos fazer os testes seguintes.
+
+
+
+2️⃣ STRP-03: Security Check (Falha de Autenticação)
+Este é um Teste Negativo. Ele garante que a "porta está trancada" para quem não tem a chave.
+
+O que fazemos: Tentamos criar um cliente, mas enviamos uma chave vazia ou inválida no cabeçalho (Authorization).
+
+O "Pulo do Gato": Usamos failOnStatusCode: false. Por padrão, o Cypress "chora" e para o teste se receber um erro. 
+Como queremos o erro, avisamos ao Cypress: "Ei, não se assuste com o erro, eu estou esperando por ele".
+
+Passo a passo:
+
+Enviamos a requisição sem a chave correta.
+
+Validamos se o erro é 401 (Não autorizado).
+
+Verificamos se a mensagem de erro da Stripe diz explicitamente que a chave é inválida.
+
+
+
+
+3️⃣ STRP-08: Create Payment Intent (Criação de Pagamento)
+Aqui testamos a Regra de Negócio principal da Stripe: o dinheiro.
+
+O que fazemos: Criamos uma "intenção de pagamento" de $20.00 (amount: 2000).
+
+O "Pulo do Gato": Mostramos que sabemos que a Stripe trabalha com centavos (por isso 2000 e não 20).
+
+Passo a passo:
+
+Enviamos o valor e a moeda (usd).
+
+Validamos se o status é 200.
+
+Verificamos se o status do pagamento é requires_payment_method. Isso prova que a intenção foi criada, mas ainda falta o cartão de crédito.
+
+Salvamos o ID desse pagamento na variável paymentIntentId.
+
+
+
+4️⃣ STRP-09: Retrieve Payment (Consulta de Pagamento)
+Este teste valida se os dados gravados estão íntegros e acessíveis.
+
+O que fazemos: Um GET usando o ID que salvamos no teste anterior.
+
+Passo a passo:
+
+Pedimos à API os detalhes do pagamento paymentIntentId.
+
+Validamos se o ID que ela nos devolveu é exatamente o mesmo que pedimos.
+
+Verificamos se o objeto retornado é de fato um payment_intent.
+
+5️⃣ STRP-12: Delete Customer (Limpeza e Encerramento)
+Este é o teste de Lifecycle (Ciclo de Vida). Ele garante que podemos remover dados e manter o sistema limpo.
+
+O que fazemos: Enviamos um DELETE para o ID do cliente que criamos lá no primeiro teste.
+
+O "Pulo do Gato": No final, o cliente deixa de existir na base de dados da Stripe.
+
+Passo a passo:
+
+Chamamos a URL de deleção com o customerId.
+
+Validamos se a resposta tem a propriedade deleted: true.
+
+Confirmamos que o ID deletado é o correto.
+
+
+
+
+
+
+💡 Resumo para o seu Portfólio:
+Ao explicar esses 5 passos, você demonstra o ciclo completo do CRUD:
+
+Create (Criar - STRP-01)
+
+Read (Ler/Consultar - STRP-09)
+
+Update (Neste fluxo, focamos na criação de pagamento atrelada ao cliente)
+
+Delete (Apagar - STRP-12)
+...além de incluir a Segurança (STRP-03).
+
+
+
+
+
+Com certeza! Vamos dissecar o código linha por linha. Imagine que estamos lendo uma receita de bolo, onde cada ingrediente e cada movimento tem um motivo de existir.
+
+Para facilitar, vou dividir em blocos:
+
+1. Configuração Inicial e Variáveis
+Aqui é onde preparamos o terreno e criamos as "gavetas" para guardar informações.
+
+JavaScript
+describe('Stripe API - Customer & Payment Lifecycle (Full Assertions)', () => {
+describe: É o título do seu conjunto de testes. Ele agrupa todos os testes relacionados à Stripe em um único bloco.
+
+JavaScript
+  const apiKey = Cypress.env('stripe_key');
+  let customerId;
+  let paymentIntentId;
+const apiKey: Cria uma constante que busca a sua chave secreta lá no arquivo cypress.env.json.
+
+let customerId / let paymentIntentId: Criamos variáveis vazias (usando let porque o valor vai mudar). Elas servem para guardar o ID do cliente e do pagamento 
+que a Stripe vai gerar, para que possamos usar nos testes seguintes.
+
+
+
+2. Criando o Cliente (STRP-01)
+Este é o teste que "escreve" um novo usuário no banco de dados da Stripe.
+
+JavaScript
+  it('STRP-01 - Should create a new customer successfully', () => {
+it: Define um caso de teste individual. O texto dentro das aspas é o que aparecerá no relatório do Cypress.
+
+JavaScript
+    cy.request({
+      method: 'POST',
+      url: 'https://api.stripe.com/v1/customers',
+      headers: { Authorization: apiKey },
+      form: true,
+      body: { 
+        name: 'John Doe QA', 
+        email: 'johndoe@example.com',
+        description: 'Customer for Portfolio'
+      }
+    })
+cy.request: O comando do Cypress que faz a chamada para a API.
+
+method: 'POST': Diz que queremos enviar/criar algo.
+
+url: O endereço da Stripe para clientes.
+
+headers: Onde enviamos a nossa "identidade" (API Key) para a Stripe saber quem somos.
+
+form: true: Avisa a Stripe que os dados estão indo no formato de formulário (que é o que ela exige).
+
+body: Os dados reais do cliente (Nome, E-mail e Descrição).
+
+JavaScript
+    .then((res) => {
+      expect(res.status).to.eq(200);
+      expect(res.body).to.have.property('id');
+      expect(res.body.name).to.eq('John Doe QA');
+      expect(res.body.object).to.eq('customer');
+      customerId = res.body.id;
+    });
+.then((res) => { ... }): Significa: "Depois que a Stripe responder, pegue a resposta (res) e faça o seguinte..."
+
+expect(res.status).to.eq(200): Verifica se a resposta foi sucesso (Código 200).
+
+expect(res.body).to.have.property('id'): Garante que a Stripe realmente criou um ID para esse cliente.
+
+customerId = res.body.id: Pega o ID que a Stripe enviou e guarda na nossa "gaveta" customerId para usar depois.
+
+
+
+
+
+3️⃣ Teste de Segurança (STRP-03)
+Este teste serve para garantir que a API rejeita quem não tem a chave correta.
+
+JavaScript
+it('STRP-03 - Should return 401 Unauthorized when API Key is missing', () => {
+it(...): Define o caso de teste de segurança.
+
+STRP-03: É o "ID" do seu teste (muito comum em empresas para organizar os requisitos).
+
+JavaScript
+  cy.request({
+    method: 'POST',
+    url: 'https://api.stripe.com/v1/customers',
+    failOnStatusCode: false, 
+    headers: { Authorization: 'Bearer ' },
+    form: true
+  })
+failOnStatusCode: false: Essa é a linha mais importante deste teste. Por padrão, o Cypress marca o teste como "falhou" se receber um erro (4xx ou 5xx). Como aqui nós queremos o erro 401, avisamos ao Cypress: "Pode continuar, eu sei que vai dar erro e vou validar isso agora".
+
+headers: { Authorization: 'Bearer ' }: Enviamos o cabeçalho de autorização, mas deixamos o espaço da chave vazio. É como tentar entrar em um prédio com um crachá em branco.
+
+JavaScript
+  .then((res) => {
+    expect(res.status).to.eq(401);
+    expect(res.body.error.type).to.eq('invalid_request_error');
+    expect(res.body.error.message).to.contain('Invalid API Key');
+  });
+expect(res.status).to.eq(401): Validamos que o servidor respondeu "401 Unauthorized" (Não autorizado).
+
+expect(res.body.error.type).to.eq(...): Verificamos no "corpo" (body) da resposta se o tipo do erro é um erro de requisição inválida.
+
+expect(res.body.error.message).to.contain(...): Confirmamos se a frase "Invalid API Key" aparece na mensagem. Isso prova que o erro foi por causa da chave, e não por outro motivo.
+
+
+
+
+4️⃣ Criando o Pagamento (STRP-08)
+Aqui testamos a funcionalidade que gera dinheiro para a empresa.
+
+JavaScript
+it('STRP-08 - Should create a Payment Intent successfully', () => {
+Payment Intent: Na Stripe, você não "cobra" direto; você cria uma "intenção" de cobrança que depois é confirmada.
+
+JavaScript
+  cy.request({
+    method: 'POST',
+    url: 'https://api.stripe.com/v1/payment_intents',
+    headers: { Authorization: apiKey },
+    form: true,
+    body: {
+      amount: 2000, 
+      currency: 'usd',
+      description: 'Portfolio Test Payment'
+    }
+  })
+url: .../payment_intents: Mudamos o "caminho" (endpoint). Agora não estamos mais na pasta de clientes, mas na de pagamentos.
+
+amount: 2000: A Stripe lê valores em centavos. Então, 2000 centavos = $20.00. Se você colocar 20, ela vai tentar cobrar 20 centavos!
+
+currency: 'usd': Definimos a moeda como Dólar Americano.
+
+JavaScript
+  .then((res) => {
+    expect(res.status).to.eq(200);
+    expect(res.body.amount).to.eq(2000);
+    expect(res.body.status).to.eq('requires_payment_method');
+    paymentIntentId = res.body.id;
+  });
+expect(res.body.status).to.eq('requires_payment_method'): Validamos que o pagamento foi criado com sucesso, mas está parado aguardando um cartão (que é o comportamento esperado para uma nova intenção).
+
+paymentIntentId = res.body.id: Guardamos o ID desse pagamento (que começa com pi_...) para podermos consultá-lo no teste seguinte.
+
+
+
+
+5️⃣ Consultando e Deletando (STRP-09 e STRP-12)
+Aqui fechamos o ciclo de vida do dado.
+
+Consulta (STRP-09):
+
+JavaScript
+cy.request({
+  method: 'GET',
+  url: `https://api.stripe.com/v1/payment_intents/${paymentIntentId}`,
+  headers: { Authorization: apiKey }
+})
+method: 'GET': "Get" significa buscar. Não estamos enviando dados novos, apenas pedindo para ver o que já existe.
+
+${paymentIntentId}: Usamos o sinal de cifrão e chaves para "colar" o ID que salvamos antes dentro do endereço da URL.
+
+Limpeza (STRP-12):
+
+JavaScript
+cy.request({
+  method: 'DELETE',
+  url: `https://api.stripe.com/v1/customers/${customerId}`,
+  headers: { Authorization: apiKey }
+})
+method: 'DELETE': Comando para apagar o registro.
+
+expect(res.body.deleted).to.be.true: A Stripe é muito organizada; quando você deleta algo, ela responde um JSON confirmando que o campo deleted agora é verdadeiro. Validar isso mostra que você é uma QA rigorosa.
