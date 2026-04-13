@@ -59,11 +59,11 @@ To run this project locally, follow these steps:
 
 To run the tests in headless mode (terminal), execute:
 
-```bash
-npx cypress run --spec cypress/e2e/stripe_tests.cy.js
+` ```bash `
 
+`npx cypress run --spec cypress/e2e/stripe_tests.cy.js`
+` ``` `
 
-## 🔐 Security Note
+`## 🔐 Security Note`
 
-This project follows **API security best practices** by using a `.gitignore` file to ensure that **sensitive keys (such as Stripe Secret Keys) are never pushed to the repository**.
-
+This project follows API security best practices by using a .gitignore file to ensure that sensitive keys (such as Stripe Secret Keys) are never pushed to the repository.
