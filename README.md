@@ -55,6 +55,7 @@ To run this project locally, follow these steps:
 * **Payment Intents (STRP-08, STRP-09):** [View Screenshot](./screenshots/automation/payment-intent-details.png)
 * **Data Cleanup (STRP-12):** [View Screenshot](./screenshots/automation/data-cleanup-delete.png)
 
+
 ### 🚀 How to Run the Tests
 
 To run the tests in headless mode (terminal), execute:
@@ -64,6 +65,7 @@ To run the tests in headless mode (terminal), execute:
 `npx cypress run --spec cypress/e2e/stripe_tests.cy.js`
 ` ``` `
 
-`## 🔐 Security Note`
+
+## 🔐 Security Note
 
 This project follows API security best practices by using a .gitignore file to ensure that sensitive keys (such as Stripe Secret Keys) are never pushed to the repository.
