@@ -4,6 +4,11 @@ This project features a comprehensive suite of automated tests for the **Stripe 
 
 ---
 
+📄 **Test Documentation & Cases:**
+* [📊 API Test Matrix & Scenarios](https://docs.google.com/spreadsheets/d/1rXN0zlR-r_8F0hksMomoDeSEBKeDJcNWPiQ4zA73E10/edit?usp=sharing): Detailed test suite planning, status, and API coverage mapping.
+
+---
+
 ## 🚀 Test Scenarios
 
 * **STRP-01**: Successfully create a new customer.
