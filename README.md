@@ -5,7 +5,10 @@ This project features a comprehensive suite of automated tests for the **Stripe 
 ---
 
 📄 **Test Documentation & Cases:**
-* [📊 API Test Matrix & Scenarios](https://docs.google.com/spreadsheets/d/1rXN0zlR-r_8F0hksMomoDeSEBKeDJcNWPiQ4zA73E10/edit?usp=sharing): Detailed test suite planning, status, and API coverage mapping.
+
+* 📊 [View Full Manual API Test Suite & Execution Report (Google Docs)](https://docs.google.com/document/d/1TfghTD2BEfvoRMu8z6wvn57-aPJbuJmGsh2H6fR3Iys/edit?usp=sharing)
+- 📊 [View Full API Test Suite & Matrix (Google Sheets)](https://docs.google.com/spreadsheets/d/1rXN0zlR-r_8F0hksMomoDeSEBKeDJcNWPiQ4zA73E10/edit?usp=sharing): Detailed test suite planning, status, and API coverage mapping.
+
 
 ---
 
@@ -24,7 +27,6 @@ This project features a comprehensive suite of automated tests for the **Stripe 
 * **Cypress** (Automation Framework)
 * **JavaScript** (Programming Language)
 * **Stripe API** (Payment Service Provider)
-* **Mocha/Chai** (Assertions and Test Structure)
 
 ---
 
