@@ -1,6 +1,6 @@
 # 💳 Stripe API Testing Suite: Manual & Cypress Automation
 
-This project was developed as a practical hands-on portfolio project to apply API testing fundamentals, transition from manual test case execution to basic automated testing with **Cypress**, and practice API security standards.
+This project features a complete API testing portfolio, combining manual test suite planning and exploratory testing in **Postman** with automated execution in **Cypress** for the Stripe REST API.
 
 ---
 
@@ -20,7 +20,8 @@ This project was developed as a practical hands-on portfolio project to apply AP
 ---
 
 ## 🛠️ Tech Stack
-* **Framework:** Cypress (API Automation)
+* **API Testing & Exploration:** Postman
+* **Automation Framework:** Cypress (API Automation)
 * **Language:** JavaScript (ES6+)
 * **Target Service:** Stripe REST API
 
