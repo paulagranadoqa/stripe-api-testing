@@ -31,8 +31,8 @@ This project was developed as a practical hands-on portfolio project to apply AP
 Follow these steps to run the project locally:
 
 1. Clone the repository:
-git clone https://github.com/seu-usuario/seu-repositorio.git
-cd seu-repositorio
+git clone https://github.com/your-username/your-repository-name.git
+cd your-repository-name
 
 2. Install dependencies:
 npm install
