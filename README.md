@@ -1,4 +1,4 @@
-# 💳 Stripe API Automation Testing - Cypress
+# 💳 Stripe API Testing Suite: Manual & Cypress Automation
 
 This project was developed as a practical hands-on portfolio project to apply API testing fundamentals, transition from manual test case execution to basic automated testing with **Cypress**, and practice API security standards.
 
