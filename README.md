@@ -1,60 +1,61 @@
 # 💳 Stripe API Automation Testing - Cypress
 
-This project features a comprehensive suite of automated tests for the **Stripe API**, covering the full lifecycle of customers and payment intents.
+This project was developed as a practical hands-on portfolio project to apply API testing fundamentals, transition from manual test case execution to basic automated testing with **Cypress**, and practice API security standards.
 
 ---
 
-📄 **Test Documentation & Cases:**
-
+## 📄 Test Documentation & Cases
 * 📊 [View Full Manual API Test Suite & Execution Report (Google Docs)](https://docs.google.com/document/d/1TfghTD2BEfvoRMu8z6wvn57-aPJbuJmGsh2H6fR3Iys/edit?usp=sharing)
 - 📊 [View Full API Test Suite & Matrix (Google Sheets)](https://docs.google.com/spreadsheets/d/1rXN0zlR-r_8F0hksMomoDeSEBKeDJcNWPiQ4zA73E10/edit?usp=sharing): Detailed test suite planning, status, and API coverage mapping.
-
 
 ---
 
 ## 🚀 Test Scenarios
-
-* **STRP-01**: Successfully create a new customer.
-* **STRP-03**: Security validation (Expects **401 Unauthorized** when the API Key is missing/invalid).
-* **STRP-08**: Successfully create a **Payment Intent**.
-* **STRP-09**: Retrieve specific details of an existing payment.
-* **STRP-12**: Data Cleanup (Successfully delete the customer created during the tests).
+* **STRP-01:** Successfully create a new customer.
+* **STRP-03:** Security validation *(Expects 401 Unauthorized when the API Key is missing/invalid)*.
+* **STRP-08:** Successfully create a Payment Intent.
+* **STRP-09:** Retrieve specific details of an existing payment.
+* **STRP-12:** Data Cleanup *(Successfully delete the customer created during the tests)*.
 
 ---
 
 ## 🛠️ Tech Stack
-
-* **Cypress** (Automation Framework)
-* **JavaScript** (Programming Language)
-* **Stripe API** (Payment Service Provider)
+* **Framework:** Cypress (API Automation)
+* **Language:** JavaScript (ES6+)
+* **Target Service:** Stripe REST API
 
 ---
 
 ## 🔧 Setup & Installation
 
-To run this project locally, follow these steps:
+Follow these steps to run the project locally:
 
-1. **Clone the repository**:
-    ```bash
-    git clone <your-repository-url>
-    ```
+1. Clone the repository:
+git clone https://github.com/seu-usuario/seu-repositorio.git
+cd seu-repositorio
 
-2. **Install dependencies**:
-    ```bash
-    npm install
-    ```
+2. Install dependencies:
+npm install
 
-3. **Configure Environment Variables**:
-    * Create a `cypress.env.json` file in the root directory.
-    * Copy the structure from `cypress.env.example.json`.
-    * Insert your Stripe Secret Key (`sk_test_...`).
+3. Configure Environment Variables:
+- Create a `cypress.env.json` file in the root directory.
+- Copy the structure from `cypress.env.example.json`.
+- Insert your Stripe Secret Key (`sk_test_...`).
 
 ---
 
+## 🚀 How to Run the Tests
 
+To run the tests in headless mode via terminal:
+npx cypress run --spec cypress/e2e/stripe_tests.cy.js
+
+To open the Cypress Test Runner (Interactive UI):
+npx cypress open
+
+---
 ## 📸 Execution Evidence
 
-#### 1. Full Test Suite (Summary)
+#### 1. Full Test Suite Summary
 ![Full Suite](./screenshots/automation/full-test-suite.png)
 
 #### 2. Detailed Results by Scenario
@@ -62,17 +63,8 @@ To run this project locally, follow these steps:
 * **Payment Intents (STRP-08, STRP-09):** [View Screenshot](./screenshots/automation/payment-intent-details.png)
 * **Data Cleanup (STRP-12):** [View Screenshot](./screenshots/automation/data-cleanup-delete.png)
 
-
-### 🚀 How to Run the Tests
-
-To run the tests in headless mode (terminal), execute:
-
-` ```bash `
-
-`npx cypress run --spec cypress/e2e/stripe_tests.cy.js`
-` ``` `
-
+---
 
 ## 🔐 Security Note
 
-This project follows API security best practices by using a .gitignore file to ensure that sensitive keys (such as Stripe Secret Keys) are never pushed to the repository.
+This project follows API security standards by incorporating a `.gitignore` file to ensure sensitive credentials (such as Stripe Secret Keys) are strictly kept out of version control.
