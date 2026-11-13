@@ -17,6 +17,14 @@ This project features a complete API testing portfolio, combining manual test su
 * **STRP-09:** Retrieve specific details of an existing payment.
 * **STRP-12:** Data Cleanup *(Successfully delete the customer created during the tests)*.
 
+### 🟣 2. Stripe API (Automated E2E Testing)
+Automated test suite using **Cypress** covering core customer and payment flows.
+* **STRP-01:** Successful creation of new customer records.
+* **STRP-03:** Security and authentication validation (Verifying `401 Unauthorized` responses).
+* **STRP-08:** Payment Intent creation and authorization.
+* **STRP-09:** Retrieval of payment transactions.
+* **STRP-12:** Data teardown and resource cleanup (Customer deletion).
+
 ---
 
 ## 🛠️ Tech Stack
