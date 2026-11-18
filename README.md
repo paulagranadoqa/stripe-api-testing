@@ -19,23 +19,23 @@ This project features a complete API testing portfolio, combining manual test su
 
 ---
 
-## 🚀 Test Scenarios & Execution Scope
-Full test suite designed and executed in **Postman** (matching the master Test Matrix), with critical-path regression automated in **Cypress** (`cy.request()`):
+## 🚀 Test Scenarios & Traceability Matrix
+Full test suite designed and executed in **Postman**, mapping master Test Plan IDs (`TC`) to automated regression scripts (`STRP`) executed in **Cypress** (`cy.request()`):
 
-| ID | Scenario | Endpoint / Method | Expected Status | Execution Scope |
-| :--- | :--- | :--- | :--- | :--- |
-| **TC01** | Create Customer (Valid Data) | `POST /v1/customers` | `200 OK` | 🤖 Cypress & Postman |
-| **TC02** | Create Customer (Invalid Email) | `POST /v1/customers` | `400 Bad Request` | 📋 Postman |
-| **TC03** | Retrieve Customer Details | `GET /v1/customers/:id` | `200 OK` | 📋 Postman |
-| **TC04** | Delete Customer | `DELETE /v1/customers/:id` | `200 OK` | 🤖 Cypress & Postman |
-| **TC05** | Update Customer Information | `POST /v1/customers/:id` | `200 OK` | 📋 Postman |
-| **TC06** | Retrieve Non-Existent Customer | `GET /v1/customers/cus_invalid` | `404 Not Found` | 📋 Postman |
-| **TC07** | Create Payment Intent (Valid) | `POST /v1/payment_intents` | `200 OK` | 📋 Postman |
-| **TC08** | Confirm Payment Intent (`pm_card_visa`) | `POST /v1/payment_intents/:id/confirm` | `200 OK` | 🤖 Cypress & Postman |
-| **TC09** | Confirm Payment (Declined Card) | `POST /v1/payment_intents/:id/confirm` | `402 Payment Required` | 📋 Postman |
-| **TC10** | Create Payment Intent (Missing Amount) | `POST /v1/payment_intents` | `400 Bad Request` | 📋 Postman |
-| **TC11** | Create Payment Intent (Negative Amount) | `POST /v1/payment_intents` | `400 Bad Request` | 📋 Postman |
-| **TC12** | Confirm Payment (Already Confirmed) | `POST /v1/payment_intents/:id/confirm` | `400 Bad Request` | 📋 Postman |
+| Plan ID | Automation ID | Scenario / Description | Endpoint / Method | Expected Status | Execution Scope |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **TC01** | `STRP-01` | Create Customer (Valid Data) | `POST /v1/customers` | `200 OK` | 🤖 Cypress & Postman |
+| **TC02** | — | Create Customer (Invalid Email) | `POST /v1/customers` | `400 Bad Request` | 📋 Postman |
+| **TC03** | `STRP-03` | Security: Missing/Invalid API Key | `POST /v1/customers` | `401 Unauthorized` | 🤖 Cypress & Postman |
+| **TC04** | — | Retrieve Customer Details | `GET /v1/customers/:id` | `200 OK` | 📋 Postman |
+| **TC05** | — | Update Customer Information | `POST /v1/customers/:id` | `200 OK` | 📋 Postman |
+| **TC06** | — | Retrieve Non-Existent Customer | `GET /v1/customers/cus_invalid` | `404 Not Found` | 📋 Postman |
+| **TC07** | — | Create Payment Intent (Valid) | `POST /v1/payment_intents` | `200 OK` | 📋 Postman |
+| **TC08** | `STRP-08` | Create / Confirm Payment Intent | `POST /v1/payment_intents` | `200 OK` | 🤖 Cypress & Postman |
+| **TC09** | `STRP-09` | Retrieve Payment / Declined Flow | `GET` / `POST` `payment_intents` | `200` / `402` | 🤖 Cypress & Postman |
+| **TC10** | — | Create Payment Intent (Missing Amount) | `POST /v1/payment_intents` | `400 Bad Request` | 📋 Postman |
+| **TC11** | — | Create Payment Intent (Negative Amount) | `POST /v1/payment_intents` | `400 Bad Request` | 📋 Postman |
+| **TC12** | `STRP-12` | Data Cleanup / Delete Customer | `DELETE /v1/customers/:id` | `200 OK` | 🤖 Cypress & Postman |
 
 ---
 
