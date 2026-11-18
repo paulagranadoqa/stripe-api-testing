@@ -81,7 +81,6 @@ npx cypress open
 
 #### 2. Test Execution
 https://github.com/user-attachments/assets/a9cc6c49-99e3-4462-835e-e5eab07014fe 
-stripe_customer.cy.js.mp4
 
 #### 3. Detailed Results by Scenario
 * **Customer & Security (STRP-01, STRP-03):** [View Screenshot](./screenshots/automation/customer-and-security.png)
