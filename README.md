@@ -10,26 +10,38 @@ This project features a complete API testing portfolio, combining manual test su
 
 ---
 
-## 🚀 Test Scenarios
-* **STRP-01:** Successfully create a new customer.
-* **STRP-03:** Security validation *(Expects 401 Unauthorized when the API Key is missing/invalid)*.
-* **STRP-08:** Successfully create a Payment Intent.
-* **STRP-09:** Retrieve specific details of an existing payment.
-* **STRP-12:** Data Cleanup *(Successfully delete the customer created during the tests)*.
+## 🎯 Key QA Highlights & Test Coverage
+- **End-to-End CRUD & Data Teardown:** Full lifecycle coverage for `Customers` (`POST`, `GET`, `POST` update, `DELETE`) with automated resource cleanup after execution.
+- **Payment Lifecycle & State Validation:** Testing `PaymentIntents` creation, confirmation flows, and handling response states.
+- **Negative & Boundary Testing:** Validation of invalid inputs (negative amounts, malformed emails), missing required fields, and non-existent IDs (`404`).
+- **Financial Business Logic:** Testing card decline scenarios (`card_declined` / `402 Payment Required`) and idempotency/double-confirmation prevention.
+- **HTTP Status Code Assertions:** Strict verification of `200 OK`, `400 Bad Request`, `401 Unauthorized`, `402 Payment Required`, and `404 Not Found`.
 
-### 🟣 2. Stripe API (Automated E2E Testing)
-Automated test suite using **Cypress** covering core customer and payment flows.
-* **STRP-01:** Successful creation of new customer records.
-* **STRP-03:** Security and authentication validation (Verifying `401 Unauthorized` responses).
-* **STRP-08:** Payment Intent creation and authorization.
-* **STRP-09:** Retrieval of payment transactions.
-* **STRP-12:** Data teardown and resource cleanup (Customer deletion).
+---
+
+## 🚀 Test Scenarios & Execution Scope
+Full test suite designed and executed in **Postman**, with critical-path regression automated in **Cypress** (`cy.request()`):
+
+| ID | Scenario | Endpoint / Method | Expected Status | Execution |
+| :--- | :--- | :--- | :--- | :--- |
+| **STRP-01** | Create Customer (Valid Data) | `POST /v1/customers` | `200 OK` | 🤖 Cypress & Postman |
+| **STRP-02** | Create Customer (Invalid Email) | `POST /v1/customers` | `400 Bad Request` | 📋 Postman |
+| **STRP-03** | Security: Missing/Invalid API Key | `POST /v1/customers` | `401 Unauthorized` | 🤖 Cypress & Postman |
+| **STRP-04** | Retrieve Customer Details | `GET /v1/customers/:id` | `200 OK` | 📋 Postman |
+| **STRP-05** | Update Customer Information | `POST /v1/customers/:id` | `200 OK` | 📋 Postman |
+| **STRP-06** | Retrieve Non-Existent Customer | `GET /v1/customers/cus_invalid` | `404 Not Found` | 📋 Postman |
+| **STRP-07** | Create Payment Intent (Valid) | `POST /v1/payment_intents` | `200 OK` | 📋 Postman |
+| **STRP-08** | Create / Confirm Payment Intent | `POST /v1/payment_intents` | `200 OK` | 🤖 Cypress & Postman |
+| **STRP-09** | Retrieve Payment Details / Declined Flow | `GET` / `POST` `payment_intents` | `200` / `402` | 🤖 Cypress & Postman |
+| **STRP-10** | Create Payment Intent (Missing Amount) | `POST /v1/payment_intents` | `400 Bad Request` | 📋 Postman |
+| **STRP-11** | Create Payment Intent (Negative Amount) | `POST /v1/payment_intents` | `400 Bad Request` | 📋 Postman |
+| **STRP-12** | Data Cleanup / Delete Customer | `DELETE /v1/customers/:id` | `200 OK` | 🤖 Cypress & Postman |
 
 ---
 
 ## 🛠️ Tech Stack
 * **API Testing & Exploration:** Postman
-* **Automation Framework:** Cypress (API Automation)
+* **Automation Framework:** Cypress (`cy.request()`)
 * **Language:** JavaScript (ES6+)
 * **Target Service:** Stripe REST API
 
@@ -68,7 +80,8 @@ npx cypress open
 ![Full Suite](./screenshots/automation/full-test-suite.png)
 
 #### 2. Test Execution
-https://github.com/user-attachments/assets/a9cc6c49-99e3-4462-835e-e5eab07014fe
+https://github.com/user-attachments/assets/a9cc6c49-99e3-4462-835e-e5eab07014fe 
+stripe_customer.cy.js.mp4
 
 #### 3. Detailed Results by Scenario
 * **Customer & Security (STRP-01, STRP-03):** [View Screenshot](./screenshots/automation/customer-and-security.png)
