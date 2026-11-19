@@ -118,4 +118,3 @@ https://github.com/user-attachments/assets/a9cc6c49-99e3-4462-835e-e5eab07014fe
 ## 🔐 Security Note
 
 This project follows API security standards by incorporating a `.gitignore` file to ensure sensitive credentials (such as Stripe Secret Keys) are strictly kept out of version control.
->>>>>>> 775471c5c7c54dafcf99fb03e057c6ac46020c83
