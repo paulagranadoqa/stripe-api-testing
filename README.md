@@ -1,4 +1,5 @@
 # 💳 Stripe API Testing Suite: Manual & Cypress Automation
+[![Stripe API Cypress CI](https://github.com/paulagranadoqa/stripe-api-testing/actions/workflows/cypress.yml/badge.svg)](https://github.com/paulagranadoqa/stripe-api-testing/actions/workflows/cypress.yml)
 
 This project features a complete API testing portfolio, combining manual test suite planning and exploratory testing in **Postman** with automated execution in **Cypress** for the Stripe REST API.
 
