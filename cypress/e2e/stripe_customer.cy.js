@@ -10,7 +10,7 @@ describe('Stripe API - Customer & Payment Lifecycle (Full Assertions)', () => {
     cy.request({
       method: 'POST',
       url: 'https://api.stripe.com/v1/customers',
-      headers: { Authorization: apiKey },
+      headers: { Authorization: `Bearer ${apiKey}` },
       form: true,
       body: { 
         name: 'John Doe QA', 
@@ -36,7 +36,7 @@ describe('Stripe API - Customer & Payment Lifecycle (Full Assertions)', () => {
     }).then((res) => {
       expect(res.status).to.eq(401);
       expect(res.body.error.type).to.eq('invalid_request_error');
-      expect(res.body.error.message).to.contain('Invalid API Key'); // Validates the error message
+      expect(res.body.error.message).to.contain('You did not provide an API key'); // Validates the error message
     });
   });
 
@@ -46,7 +46,7 @@ describe('Stripe API - Customer & Payment Lifecycle (Full Assertions)', () => {
     cy.request({
       method: 'POST',
       url: 'https://api.stripe.com/v1/payment_intents',
-      headers: { Authorization: apiKey },
+      headers: { Authorization: `Bearer ${apiKey}` },
       form: true,
       body: {
         amount: 2000, 
@@ -66,7 +66,7 @@ describe('Stripe API - Customer & Payment Lifecycle (Full Assertions)', () => {
     cy.request({
       method: 'GET',
       url: `https://api.stripe.com/v1/payment_intents/${paymentIntentId}`,
-      headers: { Authorization: apiKey }
+      headers: { Authorization: `Bearer ${apiKey}` }
     }).then((res) => {
       expect(res.status).to.eq(200);
       expect(res.body.id).to.eq(paymentIntentId);
@@ -80,12 +80,14 @@ describe('Stripe API - Customer & Payment Lifecycle (Full Assertions)', () => {
     cy.request({
       method: 'DELETE',
       url: `https://api.stripe.com/v1/customers/${customerId}`,
-      headers: { Authorization: apiKey }
+      headers: { Authorization: `Bearer ${apiKey}` }
     }).then((res) => {
       expect(res.status).to.eq(200);
       expect(res.body.deleted).to.be.true; // Validates if the deletion confirmation is true
       expect(res.body.id).to.eq(customerId); // Validates if the correct ID was deleted
     });
   });
+
+});
 
 });
