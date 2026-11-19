@@ -1,32 +1,32 @@
 describe('Stripe API - Customer & Payment Lifecycle (Full Assertions)', () => {
-  
+
   const apiKey = Cypress.env('stripe_key');
   let customerId;
   let paymentIntentId;
 
   // --- CUSTOMER TESTS ---
 
-  it('STRP-01 - Should create a new customer successfully', () => { //Happy Path
+  it('STRP-01 - Should create a new customer successfully', () => { // Happy Path
     cy.request({
       method: 'POST',
       url: 'https://api.stripe.com/v1/customers',
       headers: { Authorization: `Bearer ${apiKey}` },
       form: true,
-      body: { 
-        name: 'John Doe QA', 
+      body: {
+        name: 'John Doe QA',
         email: 'johndoe@example.com',
         description: 'Customer for Portfolio'
       }
     }).then((res) => {
       expect(res.status).to.eq(200);
-      expect(res.body).to.have.property('id'); // Ensures Stripe generated an ID
-      expect(res.body.name).to.eq('John Doe QA'); // Ensures the recorded name is correct
-      expect(res.body.object).to.eq('customer'); // Ensures the created object is of type customer
+      expect(res.body).to.have.property('id');
+      expect(res.body.name).to.eq('John Doe QA');
+      expect(res.body.object).to.eq('customer');
       customerId = res.body.id;
     });
   });
 
-  it('STRP-03 - Should return 401 Unauthorized when API Key is missing', () => { //Negative test
+  it('STRP-03 - Should return 401 Unauthorized when API Key is missing', () => { // Negative test
     cy.request({
       method: 'POST',
       url: 'https://api.stripe.com/v1/customers',
@@ -36,7 +36,7 @@ describe('Stripe API - Customer & Payment Lifecycle (Full Assertions)', () => {
     }).then((res) => {
       expect(res.status).to.eq(401);
       expect(res.body.error.type).to.eq('invalid_request_error');
-      expect(res.body.error.message).to.contain('You did not provide an API key'); // Validates the error message
+      expect(res.body.error.message).to.contain('You did not provide an API key');
     });
   });
 
@@ -49,7 +49,7 @@ describe('Stripe API - Customer & Payment Lifecycle (Full Assertions)', () => {
       headers: { Authorization: `Bearer ${apiKey}` },
       form: true,
       body: {
-        amount: 2000, 
+        amount: 2000,
         currency: 'usd',
         description: 'Portfolio Test Payment'
       }
@@ -57,7 +57,7 @@ describe('Stripe API - Customer & Payment Lifecycle (Full Assertions)', () => {
       expect(res.status).to.eq(200);
       expect(res.body.amount).to.eq(2000);
       expect(res.body.currency).to.eq('usd');
-      expect(res.body.status).to.eq('requires_payment_method'); // Expected initial status
+      expect(res.body.status).to.eq('requires_payment_method');
       paymentIntentId = res.body.id;
     });
   });
@@ -70,7 +70,7 @@ describe('Stripe API - Customer & Payment Lifecycle (Full Assertions)', () => {
     }).then((res) => {
       expect(res.status).to.eq(200);
       expect(res.body.id).to.eq(paymentIntentId);
-      expect(res.body.object).to.eq('payment_intent'); // Validates if the correct object was retrieved
+      expect(res.body.object).to.eq('payment_intent');
     });
   });
 
@@ -83,11 +83,9 @@ describe('Stripe API - Customer & Payment Lifecycle (Full Assertions)', () => {
       headers: { Authorization: `Bearer ${apiKey}` }
     }).then((res) => {
       expect(res.status).to.eq(200);
-      expect(res.body.deleted).to.be.true; // Validates if the deletion confirmation is true
-      expect(res.body.id).to.eq(customerId); // Validates if the correct ID was deleted
+      expect(res.body.deleted).to.be.true;
+      expect(res.body.id).to.eq(customerId);
     });
   });
-
-});
 
 });
