@@ -88,10 +88,11 @@ To run the tests in headless mode (terminal), execute:
 `npx cypress run --spec cypress/e2e/stripe_tests.cy.js`
 ` ``` `
 
-`## 🔐 Security Note`
+## 🔐 Security Note
 
-This project follows API security best practices by using a .gitignore file to ensure that sensitive keys (such as Stripe Secret Keys) are never pushed to the repository.
-=======
+This project follows API security best practices by using a .gitignore file to ensure that sensitive keys (such as Stripe Secret Keys) are never pushed to the repository. This project follows API security standards by incorporating a `.gitignore` file to ensure sensitive credentials (such as Stripe Secret Keys) are strictly kept out of version control.
+
+
 To run the tests in headless mode via terminal:
 npx cypress run --spec cypress/e2e/stripe_tests.cy.js
 
@@ -111,9 +112,3 @@ https://github.com/user-attachments/assets/a9cc6c49-99e3-4462-835e-e5eab07014fe
 * **Customer & Security (TC01, TC03):** [View Screenshot](./screenshots/automation/customer-and-security.png)
 * **Payment Intents (TC08, TC09):** [View Screenshot](./screenshots/automation/payment-intent-details.png)
 * **Data Cleanup (TC12):** [View Screenshot](./screenshots/automation/data-cleanup-delete.png)
-
----
-
-## 🔐 Security Note
-
-This project follows API security standards by incorporating a `.gitignore` file to ensure sensitive credentials (such as Stripe Secret Keys) are strictly kept out of version control.
