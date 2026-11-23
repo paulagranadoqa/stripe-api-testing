@@ -68,7 +68,6 @@ npm install
 
 ## 🚀 How to Run the Tests
 
-<<<<<<< HEAD
 ### 📸 Execution Evidence
 
 #### 1. Full Test Suite (Summary)
